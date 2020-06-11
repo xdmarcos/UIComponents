@@ -97,14 +97,21 @@ public class ActivityHUD {
 
   public func show(when: DelayHUD = .graceTime(delay: 0.7)) {
     guard let view = viewToPresentOn else {
-      guard let keyView = UIApplication.shared.connectedScenes
-      .filter({ $0.activationState == .foregroundActive })
-      .map({ $0 as? UIWindowScene })
-      .compactMap({ $0 })
-      .first?.windows
-      .filter({ $0.isKeyWindow }).first else { return }
+      var keyWindow = UIView()
+      if #available(iOS 13.0, *) {
+        guard let keyView = UIApplication.shared.connectedScenes
+          .filter({ $0.activationState == .foregroundActive })
+          .map({ $0 as? UIWindowScene })
+          .compactMap({ $0 })
+          .first?.windows
+          .filter({ $0.isKeyWindow }).first else { return }
+        keyWindow = keyView
+      } else {
+        guard let keyView = UIApplication.shared.keyWindow else { return }
+        keyWindow = keyView
+      }
 
-      show(inView: keyView, withDelay: when)
+      show(inView: keyWindow, withDelay: when)
       return
     }
 

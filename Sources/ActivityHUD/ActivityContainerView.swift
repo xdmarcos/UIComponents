@@ -67,7 +67,11 @@ class ActivityContainerView: UIView {
     spinnerOffSet = offset
 
     super.init(frame: CGRect.zero)
-    setSizeAndScale(size: selectedSize)
+    if #available(iOS 13.0, *) {
+      setSizeAndScale(size: selectedSize)
+    } else {
+      setSizeAndScaleLegacy(size: selectedSize)
+    }
     commonInit()
     setBackgroundColor(color: backgroundViewColor)
   }
@@ -165,6 +169,7 @@ private extension ActivityContainerView {
     addSubview(spinner)
   }
 
+  @available(iOS 13.0, *)
   func setSizeAndScale(size: SpinnerSize) {
     var activityStyle = UIActivityIndicatorView.Style.medium
     var activityScale: CGFloat = 1.0
@@ -177,6 +182,25 @@ private extension ActivityContainerView {
       activityScale = 1.0
     case let .custom(scale):
       activityStyle = .medium
+      activityScale = scale
+    }
+
+    spinner.style = activityStyle
+    spinner.transform = CGAffineTransform(scaleX: activityScale, y: activityScale)
+  }
+
+  func setSizeAndScaleLegacy(size: SpinnerSize) {
+    var activityStyle = UIActivityIndicatorView.Style.white
+    var activityScale: CGFloat = 1.0
+    switch size {
+    case .medium:
+      activityStyle = .white
+      activityScale = 1.0
+    case .large:
+      activityStyle = .whiteLarge
+      activityScale = 1.0
+    case let .custom(scale):
+      activityStyle = .white
       activityScale = scale
     }
 
