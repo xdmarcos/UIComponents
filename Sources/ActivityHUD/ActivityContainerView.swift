@@ -40,10 +40,7 @@ class ActivityContainerView: UIView {
 
   // MARK: - View's lifecycle
 
-  init(
-    animationType: SpinnerType = .white(size: .medium),
-    offset: UIOffset = UIOffset(horizontal: 0.0, vertical: 0.0)
-  ) {
+  init(animationType: SpinnerType, offset: UIOffset) {
     var backgroundViewColor: UIColor = .clear
     var spinnerColor: UIColor = .white
     var selectedSize: SpinnerSize = .medium
