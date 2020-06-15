@@ -52,7 +52,7 @@ public class ActivityHUD {
 
   public init(
     viewToPresentOn view: UIView? = nil,
-    animationType: SpinnerType = .white(size: .medium),
+    animationType: SpinnerType = .white(size: .large),
     backgroundColor: UIColor? = nil,
     offset: UIOffset = UIOffset(horizontal: 0.0, vertical: 0.0)
   ) {
